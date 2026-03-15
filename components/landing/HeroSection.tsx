@@ -17,13 +17,10 @@ export default function HeroSection() {
           way to connect at any event.
         </p>
         <div className="flex flex-wrap items-center gap-5">
-          <Button
-            className="border border-black p-6 transition hover:bg-white hover:text-black"
-            asChild
-          >
+          <Button className="border" asChild>
             <Link
               href={"/join"}
-              className="flex items-center gap-2 text-white hover:bg-white hover:text-black"
+              className="flex items-center gap-2 border-black p-6 transition hover:bg-white hover:text-black"
             >
               Join the Party
               <ArrowRight size={20} />{" "}
@@ -33,7 +30,7 @@ export default function HeroSection() {
             className="border-black p-6 transition hover:bg-black hover:text-white dark:bg-white dark:text-black dark:hover:text-white"
             variant={"outline"}
           >
-            Create Event
+            <Link href={"/admin"}>Create Event</Link>
           </Button>
         </div>
       </div>
