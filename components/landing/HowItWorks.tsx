@@ -4,11 +4,9 @@ import { DraftingCompass, MonitorSmartphone, Smartphone } from "lucide-react"
 
 export default function HowItWorks() {
   return (
-    <div className="flex h-[90svh] w-full flex-col space-y-10 overflow-hidden rounded-4xl border-4 border-black bg-white p-8 shadow-2xl dark:border-white dark:bg-black">
-      <div>
-        <p className="text-4xl font-black">How It Works</p>
-      </div>
-      <div className="flex h-full flex-col items-center gap-5 space-y-3 overflow-auto lg:flex-row lg:justify-center">
+    <div className="flex h-[90svh] w-full flex-col space-y-10 rounded-4xl border-4 border-black bg-white p-8 shadow-2xl dark:border-white dark:bg-black">
+      <p className="text-4xl font-black">How It Works</p>
+      <div className="flex h-full flex-col items-center gap-5 space-y-3 overflow-auto lg:flex-row lg:justify-center lg:overflow-visible">
         <StepCard
           icon={DraftingCompass}
           title="1. Create & Customize"
