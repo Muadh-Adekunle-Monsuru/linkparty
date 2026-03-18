@@ -35,12 +35,12 @@ export default function AdminPageContents() {
 
   return (
     <div className="h-full flex-1 px-6 py-12">
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-7xl space-y-5">
         <div className="space-y-3">
           <p className="text-4xl font-light">Hello, {user.fullName}</p>
           <p>Manage your events here:</p>
         </div>
-        <CreateEventButton />
+        <CreateEventButton user_id={user.id} />
       </div>
     </div>
   )

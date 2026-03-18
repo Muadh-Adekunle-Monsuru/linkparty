@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import { Metadata } from "next"
 import { ClerkProvider } from "@clerk/nextjs"
+import { ConvexClientProvider } from "@/ConvexClientProvider"
+import { Toaster } from "@/components/ui/sonner"
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -37,7 +39,10 @@ export default function RootLayout({
     >
       <body>
         <ClerkProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <ConvexClientProvider>{children}</ConvexClientProvider>
+            <Toaster position="top-center" />
+          </ThemeProvider>
         </ClerkProvider>
       </body>
     </html>
