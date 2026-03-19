@@ -1,6 +1,7 @@
 import { mutation } from "./_generated/server"
 import { v } from "convex/values"
-export const myMutationFunction = mutation({
+
+export const createEventFunction = mutation({
   // Validators for arguments.
   args: {
     name: v.string(),
@@ -11,6 +12,7 @@ export const myMutationFunction = mutation({
     event_date: v.string(),
     creator_id: v.string(),
     code: v.string(),
+    flier_url: v.string(),
   },
   handler: async (ctx, args) => {
     return await ctx.db.insert("events", { ...args })

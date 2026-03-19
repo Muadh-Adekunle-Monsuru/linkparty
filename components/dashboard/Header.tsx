@@ -13,7 +13,7 @@ export default function Header() {
           <div className="flex items-center gap-4">
             <Link
               href={"/join"}
-              className="border-2 border-black bg-white px-6 py-2 font-bold text-black transition hover:bg-black hover:text-white"
+              className="rounded-lg border-2 border-black bg-white px-6 py-2 font-bold text-black transition hover:bg-black hover:text-white"
             >
               Join Event
             </Link>
@@ -21,9 +21,9 @@ export default function Header() {
               when="signed-in"
               fallback={
                 <SignInButton>
-                  <button className="border-2 border-black bg-black px-6 py-2 font-bold text-white transition hover:bg-white hover:text-black">
+                  <Button className="border-2 border-black bg-black px-6 py-2 font-bold text-white transition hover:bg-white hover:text-black">
                     Sign In
-                  </button>
+                  </Button>
                 </SignInButton>
               }
             >

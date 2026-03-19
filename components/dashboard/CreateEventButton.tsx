@@ -1,10 +1,9 @@
 "use client"
-import { useMutation } from "convex/react"
+import { create_event } from "@/lib/server"
 import { Plus } from "lucide-react"
 import React, { useState } from "react"
-import { api } from "@/convex/_generated/api"
-import { nanoid } from "nanoid"
 import { toast } from "sonner"
+import { Spinner } from "../ui/spinner"
 export default function CreateEventButton({ user_id }: { user_id: string }) {
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [newEventTitle, setNewEventTitle] = useState("")
@@ -12,23 +11,23 @@ export default function CreateEventButton({ user_id }: { user_id: string }) {
   const [newEventLocation, setNewEventLocation] = useState("")
   const [newEventFlier, setNewEventFlier] = useState("")
   const [date, setDate] = React.useState("")
+  const [error, setError] = useState("")
 
   const [creatingEvent, setCreatingEvent] = useState(false)
-  const create = useMutation(api.functions.myMutationFunction)
   const handleCreateEvent = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setCreatingEvent(true)
+    setError("")
+    const formData = new FormData(e.currentTarget)
+    const file = formData.get("flier") as File
 
-    await create({
-      code: nanoid(6),
-      description: newEventDescription.trim(),
-      event_date: date,
-      is_archived: false,
-      is_open: false,
-      location: newEventLocation,
-      name: newEventTitle,
-      creator_id: user_id,
-    })
+    if (!file || !file.type.startsWith("image")) {
+      setError("Flier is required and only images are allowed")
+      setCreatingEvent(false)
+      return
+    }
+
+    await create_event({ formData, creator_id: user_id })
       .then((response) => {
         console.log(response)
         toast.success("Event created succesfully")
@@ -37,21 +36,22 @@ export default function CreateEventButton({ user_id }: { user_id: string }) {
         setNewEventLocation("")
         setDate("")
         setNewEventFlier("")
+        setCreatingEvent(false)
+        setShowCreateForm(false)
       })
       .catch((error) => {
         toast.error("Error creating event", {
           description: `${JSON.stringify(error)}`,
         })
+        setError(`${JSON.stringify(error)}`)
       })
-    setCreatingEvent(false)
-    setShowCreateForm(false)
   }
   return (
     <div>
       {!showCreateForm && (
         <button
           onClick={() => setShowCreateForm(true)}
-          className="mb-12 flex items-center gap-2 border-3 border-black bg-black px-3 py-3 text-sm font-black text-white transition hover:bg-white hover:text-black"
+          className="mb-12 flex items-center gap-2 rounded-lg border-3 border-black bg-black px-3 py-3 text-sm font-black text-white transition hover:bg-white hover:text-black"
         >
           <Plus size={24} />
           CREATE NEW EVENT
@@ -59,7 +59,9 @@ export default function CreateEventButton({ user_id }: { user_id: string }) {
       )}
 
       {showCreateForm && (
-        <div className="mb-12 border-2 border-black p-8">
+        <div
+          className={`mb-12 rounded-4xl border-4 border-black p-8 ${error ? "border-red-700" : "border-black"}`}
+        >
           <h2 className="mb-6 text-3xl font-black">CREATE NEW EVENT</h2>
           <form onSubmit={handleCreateEvent} className="space-y-6">
             <div>
@@ -69,9 +71,12 @@ export default function CreateEventButton({ user_id }: { user_id: string }) {
               <input
                 type="text"
                 value={newEventTitle}
+                name="title"
+                id="title"
                 onChange={(e) => setNewEventTitle(e.target.value)}
+                required
                 placeholder="Tech Conference 2026"
-                className="w-full border-2 border-black p-4 text-lg transition focus:outline-4"
+                className="w-full rounded-4xl border-2 border-black p-4 text-lg transition focus:outline-4"
               />
             </div>
             <div>
@@ -80,9 +85,11 @@ export default function CreateEventButton({ user_id }: { user_id: string }) {
               </label>
               <textarea
                 value={newEventDescription}
+                name="description"
+                id="description"
                 onChange={(e) => setNewEventDescription(e.target.value)}
                 placeholder="The biggest tech conference in Africa is here again..."
-                className="w-full border-3 border-black p-4 text-lg transition focus:outline-4"
+                className="w-full rounded-lg border-2 border-black p-4 text-lg transition focus:outline-4"
               />
             </div>
             <div>
@@ -92,9 +99,12 @@ export default function CreateEventButton({ user_id }: { user_id: string }) {
               <input
                 type="text"
                 value={newEventLocation}
+                name="location"
+                id="location"
+                required
                 onChange={(e) => setNewEventLocation(e.target.value)}
                 placeholder="Eko Hotel, Ikeja, Lagos State"
-                className="w-full border-3 border-black p-4 text-lg transition focus:outline-4"
+                className="w-full rounded-4xl border-2 border-black p-4 text-lg transition focus:outline-4"
               />
             </div>
             <div>
@@ -102,9 +112,12 @@ export default function CreateEventButton({ user_id }: { user_id: string }) {
               <input
                 type="date"
                 value={date}
+                name="date"
+                id="date"
+                required
                 onChange={(e) => setDate(e.target.value)}
                 placeholder="Tech Conference 2026"
-                className="w-fit border-3 border-black p-4 text-lg transition focus:outline-4"
+                className="w-fit rounded-4xl border-2 border-black p-4 text-lg transition focus:outline-4"
               />
             </div>
             <div>
@@ -112,24 +125,40 @@ export default function CreateEventButton({ user_id }: { user_id: string }) {
                 Event Flier
               </label>
               <input
-                accept="imgage"
+                accept="image/*"
                 type="file"
-                value={newEventFlier}
-                onChange={(e) => setNewEventFlier(e.target.value)}
-                className="w-full border-3 border-black p-4 text-lg focus:outline-4"
+                name="flier"
+                id="flier"
+                required
+                className="w-full rounded-4xl border-2 border-black p-4 text-lg focus:outline-4"
               />
             </div>
+            {error && (
+              <p className="text-lg text-red-600">
+                Error creating event: {error}
+              </p>
+            )}
             <div className="flex gap-4">
               <button
                 type="submit"
                 disabled={creatingEvent || !newEventTitle.trim()}
                 className="border-3 border-black bg-black px-8 py-3 font-bold text-white transition hover:bg-white hover:text-black disabled:opacity-50"
               >
-                {creatingEvent ? "Creating..." : "Create Event"}
+                {creatingEvent ? (
+                  <div className="flex items-center gap-2">
+                    <Spinner />
+                    <p>Creating...</p>
+                  </div>
+                ) : (
+                  "Create Event"
+                )}
               </button>
               <button
                 type="button"
-                onClick={() => setShowCreateForm(false)}
+                onClick={() => {
+                  setShowCreateForm(false)
+                  setError("")
+                }}
                 className="border-3 border-black bg-white px-8 py-3 font-bold text-black transition hover:bg-black hover:text-white"
               >
                 Cancel
