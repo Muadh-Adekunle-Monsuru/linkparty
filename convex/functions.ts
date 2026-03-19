@@ -1,4 +1,4 @@
-import { mutation } from "./_generated/server"
+import { mutation, query } from "./_generated/server"
 import { v } from "convex/values"
 
 export const createEventFunction = mutation({
@@ -16,5 +16,18 @@ export const createEventFunction = mutation({
   },
   handler: async (ctx, args) => {
     return await ctx.db.insert("events", { ...args })
+  },
+})
+
+export const getAdminEvents = query({
+  args: {
+    creator_id: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const documents = await ctx.db
+      .query("events")
+      .withIndex("by_creatorId", (q) => q.eq("creator_id", args.creator_id))
+      .collect()
+    return documents
   },
 })

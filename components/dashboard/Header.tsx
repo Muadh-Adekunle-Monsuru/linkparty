@@ -6,8 +6,8 @@ import { Show, SignIn, SignInButton, UserButton } from "@clerk/nextjs"
 
 export default function Header() {
   return (
-    <div>
-      <div className="border-b-2 border-black px-6 py-6">
+    <div className="sticky top-0 w-full bg-neutral-50">
+      <div className="border-b-2 border-black px-6 py-3">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <Logo />
           <div className="flex items-center gap-4">

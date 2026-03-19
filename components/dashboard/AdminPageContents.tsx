@@ -5,6 +5,7 @@ import { SignInButton, useUser } from "@clerk/nextjs"
 import CreateEventButton from "./CreateEventButton"
 import Image from "next/image"
 import { Loader } from "lucide-react"
+import ShowAdminEvents from "./ShowAdminEvents"
 export default function AdminPageContents() {
   const { isSignedIn, user, isLoaded } = useUser()
 
@@ -41,6 +42,7 @@ export default function AdminPageContents() {
           <p>Manage your events here:</p>
         </div>
         <CreateEventButton user_id={user.id} />
+        <ShowAdminEvents user_id={user.id} />
       </div>
     </div>
   )

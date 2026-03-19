@@ -12,7 +12,7 @@ export default defineSchema({
     event_date: v.string(),
     creator_id: v.string(),
     flier_url: v.optional(v.string()),
-  }).index("by_code", ["code"]),
+  }).index("by_creatorId", ["creator_id"]),
   attendess: defineTable({
     event_id: v.string(),
     name: v.string(),
