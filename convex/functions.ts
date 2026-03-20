@@ -27,7 +27,18 @@ export const getAdminEvents = query({
     const documents = await ctx.db
       .query("events")
       .withIndex("by_creatorId", (q) => q.eq("creator_id", args.creator_id))
+      .order("desc")
       .collect()
     return documents
+  },
+})
+
+export const getEventDetails = query({
+  args: {
+    event_id: v.id("events"),
+  },
+  handler: async (ctx, args) => {
+    const event = await ctx.db.get("events", args.event_id)
+    return event
   },
 })

@@ -2,8 +2,8 @@
 import cloudinary from "@/lib/cloudinary"
 import { fetchMutation } from "convex/nextjs"
 import { api } from "@/convex/_generated/api"
-import { nanoid } from "nanoid"
-
+import { nanoid, customAlphabet } from "nanoid"
+const alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 export async function create_event({
   formData,
   creator_id,
@@ -38,7 +38,7 @@ export async function create_event({
   })) as any
 
   const id = await fetchMutation(api.functions.createEventFunction, {
-    code: nanoid(6),
+    code: customAlphabet(alphabet, 6)(),
     description,
     event_date,
     is_archived: false,
