@@ -8,7 +8,7 @@ export default function Logo() {
     <Link href="/" className="flex items-center gap-2 blur-[0.5px]">
       <Image src={"/logo.svg"} height={50} width={50} alt="logo" />
       <p className="hidden font-mono text-3xl font-light uppercase md:block">
-        Link Party
+        Link-Party
       </p>
     </Link>
   )

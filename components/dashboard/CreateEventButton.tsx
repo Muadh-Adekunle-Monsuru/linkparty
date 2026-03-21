@@ -18,6 +18,7 @@ export default function CreateEventButton({ user_id }: { user_id: string }) {
     e.preventDefault()
     setCreatingEvent(true)
     setError("")
+
     const formData = new FormData(e.currentTarget)
     const file = formData.get("flier") as File
 
@@ -40,10 +41,9 @@ export default function CreateEventButton({ user_id }: { user_id: string }) {
         setShowCreateForm(false)
       })
       .catch((error) => {
-        toast.error("Error creating event", {
-          description: `${JSON.stringify(error)}`,
-        })
-        setError(`${JSON.stringify(error)}`)
+        console.log("Error")
+        toast.error("Error creating event")
+        setError(`Error creating event`)
       })
   }
   return (
@@ -122,7 +122,7 @@ export default function CreateEventButton({ user_id }: { user_id: string }) {
             </div>
             <div>
               <label className="mb-2 block text-lg font-bold">
-                Event Flier
+                Event Flier*
               </label>
               <input
                 accept="image/*"
@@ -158,6 +158,7 @@ export default function CreateEventButton({ user_id }: { user_id: string }) {
                 onClick={() => {
                   setShowCreateForm(false)
                   setError("")
+                  setCreatingEvent(false)
                 }}
                 className="border-3 border-black bg-white px-8 py-3 font-bold text-black transition hover:bg-black hover:text-white"
               >

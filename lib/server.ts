@@ -4,6 +4,7 @@ import { fetchMutation } from "convex/nextjs"
 import { api } from "@/convex/_generated/api"
 import { nanoid, customAlphabet } from "nanoid"
 const alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 export async function create_event({
   formData,
   creator_id,
@@ -42,7 +43,7 @@ export async function create_event({
     description,
     event_date,
     is_archived: false,
-    is_open: false,
+    is_open: true,
     location,
     name,
     creator_id,
@@ -51,3 +52,5 @@ export async function create_event({
 
   return id
 }
+
+export async function toggleEventAcces({ eventId }: { eventId: string }) {}
