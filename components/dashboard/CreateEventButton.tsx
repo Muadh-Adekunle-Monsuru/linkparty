@@ -43,7 +43,7 @@ export default function CreateEventButton({ user_id }: { user_id: string }) {
       .catch((error) => {
         console.log("Error")
         toast.error("Error creating event")
-        setError(`Error creating event`)
+        setError(`Error creating event, try again`)
       })
   }
   return (

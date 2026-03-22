@@ -35,10 +35,17 @@ export const getAdminEvents = query({
 
 export const getEventDetails = query({
   args: {
-    event_id: v.id("events"),
+    event_id: v.string(),
   },
   handler: async (ctx, args) => {
-    const event = await ctx.db.get("events", args.event_id)
+    const event = await ctx.db
+      .query("events")
+      .filter((q) => q.eq(q.field("_id"), args.event_id))
+      .first()
+
+    if (!event) {
+      return "error"
+    }
     return event
   },
 })
@@ -88,5 +95,23 @@ export const updateArchive = mutation({
     })
 
     return { update: "success" }
+  },
+})
+
+export const getEventByCode = query({
+  args: {
+    code: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const event = await ctx.db
+      .query("events")
+      .filter((q) => q.eq(q.field("code"), args.code))
+      .first()
+
+    if (!event) {
+      return "error"
+    }
+
+    return event._id
   },
 })

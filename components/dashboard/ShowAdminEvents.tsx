@@ -8,6 +8,8 @@ import React, { useState } from "react"
 import { Spinner } from "../ui/spinner"
 import { toast } from "sonner"
 import { copyToClipboard } from "@/lib/utils"
+import AdminEventListSkeleton from "./AdminEventListSkeleton"
+import AdminEventListEmptyState from "./AdminEventListEmptyState"
 
 export default function ShowAdminEvents({ user_id }: { user_id: string }) {
   const data = useQuery(api.functions.getAdminEvents, {
@@ -52,25 +54,16 @@ export default function ShowAdminEvents({ user_id }: { user_id: string }) {
   }
   if (data == undefined)
     return (
-      <div className="flex w-full flex-col items-center justify-center">
-        <Spinner />
-        <p>Loading your events...</p>
+      <div className="w-full">
+        <p className="mb-5 text-2xl font-medium">Your Events:</p>
+        <AdminEventListSkeleton />
       </div>
     )
 
   if (data.length == 0)
     return (
       <div>
-        <p className="mb-5 text-2xl font-medium">Your Events:</p>
-        <div className="flex w-full flex-col items-center justify-center gap-5">
-          <Image
-            src={"/no-trips.png"}
-            height={200}
-            width={300}
-            alt="no-trips"
-          />
-          <p>No events yet, create an event.</p>
-        </div>
+        <AdminEventListEmptyState />
       </div>
     )
   return (
