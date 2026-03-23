@@ -16,7 +16,8 @@ export default defineSchema({
   attendess: defineTable({
     event_id: v.string(),
     name: v.string(),
-    linked_url: v.string(),
-    is_vip: v.string(),
+    linkedin_url: v.string(),
+    is_vip: v.optional(v.string()),
+    interests: v.optional(v.array(v.string())),
   }),
 })

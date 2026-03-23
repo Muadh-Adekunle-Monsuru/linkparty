@@ -1,4 +1,5 @@
 "use client"
+import { AddLinkFloatButton } from "@/components/AddLinkedInButton"
 import Header from "@/components/dashboard/Header"
 import ErrorComponent from "@/components/event/ErrorComponent"
 import EventPageDetails from "@/components/event/EventPageDetails"
@@ -31,13 +32,16 @@ export default function EventPage({ params }: { params: any }) {
   if (eventData == "error") return <ErrorComponent />
 
   return (
-    <div className="mx-auto min-h-screen max-w-6xl bg-white p-4">
+    <div className="mx-auto min-h-screen max-w-7xl bg-white p-4">
       <Logo />
       <EventPageDetails eventData={eventData} />
       <div className="mx-auto mt-16 max-w-6xl border-t-4 border-black px-4 py-8 pt-12 md:py-12">
-        <h2 className="mb-8 text-3xl font-black text-black uppercase">
-          Attendees
-        </h2>
+        <div className="mb-8 flex items-center justify-between">
+          <h2 className="text-3xl font-black text-black uppercase">
+            Attendees
+          </h2>
+          <AddLinkFloatButton event_id={eventId} />
+        </div>
         <div className="min-h-[200px] rounded-xl border-2 border-dashed border-neutral-300 bg-neutral-50 p-8 text-center">
           <p className="font-medium text-neutral-500">
             Attendee list component goes here.

@@ -115,3 +115,17 @@ export const getEventByCode = query({
     return event._id
   },
 })
+
+export const joinEvent = mutation({
+  args: {
+    event_id: v.string(),
+    name: v.string(),
+    linkedin_url: v.string(),
+    interests: v.optional(v.array(v.string())),
+  },
+  handler: async (ctx, args) => {
+    const event = await ctx.db.insert("attendess", { ...args })
+
+    return event
+  },
+})
