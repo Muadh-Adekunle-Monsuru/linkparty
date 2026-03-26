@@ -55,6 +55,7 @@ export default function EventPage({ params }: { params: any }) {
             <AttendeeListComponents
               event_id={eventId}
               is_admin={auth.userId == eventData.creator_id}
+              admin_id={auth.userId || ""}
             />
           </div>
         </div>

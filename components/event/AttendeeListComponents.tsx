@@ -1,13 +1,12 @@
 "use client"
 import { api } from "@/convex/_generated/api"
-import { useQuery } from "convex/react"
-import { Award, ExternalLink } from "lucide-react"
-import React, { useState } from "react"
 import Avatar from "boring-avatars"
+import { useMutation, useQuery } from "convex/react"
+import { Award } from "lucide-react"
+import { useState } from "react"
+import { InterestFilter } from "../InterestFilter"
 import { BrutalistSearchBar } from "../SearchBar"
 import { Button } from "../ui/button"
-import { useAuth } from "@clerk/nextjs"
-import { InterestSelector } from "../InterestSelector"
 
 const PARTY_COLORS = ["#FFAD60", "#FFEE63", "#96CEB4", "#FFEEAD", "#D9534F"]
 const getInterestColor = (interest: string) => {
@@ -36,12 +35,17 @@ const getInterestColor = (interest: string) => {
 export default function AttendeeListComponents({
   event_id,
   is_admin,
+  admin_id,
 }: {
   event_id: string
   is_admin: boolean
+  admin_id: string
 }) {
   const [searchTerm, setSearchTerm] = useState("")
+  const [searchFilters, setSearchFilters] = useState([])
   const attendees = useQuery(api.functions.getEventAttendees, { event_id })
+  const vip_mutation = useMutation(api.functions.toggleVIP)
+
   if (attendees == undefined) return <div>Loading...</div>
   if (attendees == "error")
     return <div>Could not getting event attendees...</div>
@@ -61,6 +65,11 @@ export default function AttendeeListComponents({
 
     return nameMatch || interestMatch
   })
+
+  const handleClick = (attendee_id: any, is_vip: boolean) => {
+    vip_mutation({ admin_id, attendee_id, event_id, is_vip: !is_vip })
+  }
+
   return (
     <div>
       {attendees.length == 0 ? (
@@ -78,30 +87,35 @@ export default function AttendeeListComponents({
         </div>
       ) : (
         <div>
-          <div className="flex items-center justify-between pb-5">
+          <div className="pb-5">
             <BrutalistSearchBar
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
             />
-            <InterestSelector onSelectionChange={() => {}} />
           </div>
-          {is_admin && (
-            <p className="py-2 text-sm sm:text-center lg:text-left">
-              Tap on a user card to make user a VIP
-            </p>
-          )}
+
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredAttendees.map((attendee) => (
               <div
                 key={attendee._id}
                 className="relative flex flex-col space-y-1 rounded-xl border-2 border-black bg-white p-3 transition-transform hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
               >
-                <div className="absolute -top-5 -left-5">
-                  <Award
-                    className="size-12 text-muted-foreground"
-                    strokeWidth={0.8}
-                  />
-                </div>
+                {(is_admin || attendee.is_vip) && (
+                  <Button
+                    variant={"ghost"}
+                    disabled={!is_admin}
+                    className="absolute -top-5 -left-5"
+                    onClick={() =>
+                      handleClick(attendee._id, attendee.is_vip || false)
+                    }
+                    title={attendee.is_vip ? "Remove VIP" : "Make VIP"}
+                  >
+                    <Award
+                      className={`size-12 text-muted-foreground ${attendee.is_vip && "fill-amber-500 text-yellow-500"} rotate-5`}
+                      strokeWidth={0.8}
+                    />
+                  </Button>
+                )}
                 <div className="flex h-full grow items-center justify-between space-x-2 md:flex-col md:space-y-4 md:p-2">
                   <div className="mb-2 flex items-center gap-4">
                     <div className="shrink-0 overflow-hidden rounded-full border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">

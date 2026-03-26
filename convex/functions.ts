@@ -154,3 +154,28 @@ export const getEventAttendees = query({
     return attendees
   },
 })
+
+export const toggleVIP = mutation({
+  args: {
+    attendee_id: v.id("attendess"),
+    admin_id: v.string(),
+    event_id: v.string(),
+    is_vip: v.boolean(),
+  },
+  handler: async (ctx, args) => {
+    const event = await ctx.db
+      .query("events")
+      .filter((q) => q.and(q.eq(q.field("creator_id"), args.admin_id)))
+      .first()
+
+    if (!event) {
+      return "error"
+    }
+
+    await ctx.db.patch("attendess", args.attendee_id, {
+      is_vip: args.is_vip,
+    })
+
+    return event
+  },
+})

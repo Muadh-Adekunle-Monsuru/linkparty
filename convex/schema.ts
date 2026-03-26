@@ -17,7 +17,7 @@ export default defineSchema({
     event_id: v.string(),
     name: v.string(),
     linkedin_url: v.string(),
-    is_vip: v.optional(v.string()),
+    is_vip: v.optional(v.boolean()),
     interests: v.optional(v.array(v.string())),
   }),
 })
