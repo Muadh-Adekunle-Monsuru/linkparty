@@ -40,7 +40,12 @@ export const getEventDetails = query({
   handler: async (ctx, args) => {
     const event = await ctx.db
       .query("events")
-      .filter((q) => q.eq(q.field("_id"), args.event_id))
+      .filter((q) =>
+        q.and(
+          q.eq(q.field("_id"), args.event_id),
+          q.eq(q.field("is_open"), true)
+        )
+      )
       .first()
 
     if (!event) {
@@ -105,7 +110,9 @@ export const getEventByCode = query({
   handler: async (ctx, args) => {
     const event = await ctx.db
       .query("events")
-      .filter((q) => q.eq(q.field("code"), args.code))
+      .filter((q) =>
+        q.and(q.eq(q.field("code"), args.code), q.eq(q.field("is_open"), true))
+      )
       .first()
 
     if (!event) {
@@ -127,5 +134,23 @@ export const joinEvent = mutation({
     const event = await ctx.db.insert("attendess", { ...args })
 
     return event
+  },
+})
+
+export const getEventAttendees = query({
+  args: {
+    event_id: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const attendees = await ctx.db
+      .query("attendess")
+      .filter((q) => q.eq(q.field("event_id"), args.event_id))
+      .collect()
+
+    if (!attendees) {
+      return "error"
+    }
+
+    return attendees
   },
 })

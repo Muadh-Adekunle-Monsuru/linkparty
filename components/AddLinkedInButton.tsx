@@ -43,8 +43,8 @@ export function AddLinkFloatButton({ event_id }: { event_id: string }) {
       return
     }
 
-    if (!link) {
-      toast.error("Enter a Linkenin link")
+    if (!link || !isValid) {
+      toast.error("Enter a valid LinkedIn link")
       return
     }
 

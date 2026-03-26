@@ -82,14 +82,14 @@ export default function ShowAdminEvents({ user_id }: { user_id: string }) {
                   <div className="bg-black px-4 py-2 text-sm font-bold text-white uppercase">
                     CODE: {event.code}
                   </div>
-                  {!event.is_open && (
+                  {event.is_archived && (
                     <div className="border-2 border-red-900 bg-red-100 px-4 py-2 text-sm font-bold text-red-900">
-                      CLOSED
+                      ARCHIVED
                     </div>
                   )}
-                  {event.is_archived && (
+                  {!event.is_open && (
                     <div className="bg-gray-200 px-4 py-2 text-sm font-bold text-gray-700">
-                      ARCHIVED
+                      CLOSED
                     </div>
                   )}
                 </div>
@@ -123,33 +123,31 @@ export default function ShowAdminEvents({ user_id }: { user_id: string }) {
                 </Link>
 
                 <button
-                  onClick={() => toggleAccess(event._id)}
+                  onClick={() => toggleVisibility(event._id)}
                   className={`flex items-center gap-2 border-2 px-4 py-2 font-bold transition ${
-                    event.is_open
-                      ? "border-green-900 bg-green-100 text-green-900 hover:bg-green-200"
-                      : "border-yellow-900 bg-yellow-100 text-yellow-900 hover:bg-yellow-200"
+                    event.is_archived
+                      ? "border-yellow-900 bg-yellow-100 text-yellow-900 hover:bg-yellow-200"
+                      : "border-green-900 bg-green-100 text-green-900 hover:bg-green-200"
                   }`}
-                  title={
-                    event.is_open ? "Close registrations" : "Open registrations"
-                  }
+                  title={event.is_archived ? "Unarchive" : "Archive"}
                 >
-                  {event.is_open ? <Unlock size={18} /> : <Lock size={18} />}
+                  {event.is_archived ? (
+                    <Lock size={18} />
+                  ) : (
+                    <Unlock size={18} />
+                  )}
                 </button>
 
                 <button
-                  onClick={() => toggleVisibility(event._id)}
+                  onClick={() => toggleAccess(event._id)}
                   className={`flex items-center gap-2 border-2 px-4 py-2 font-bold transition ${
-                    !event.is_archived
+                    event.is_open
                       ? "border-blue-900 bg-blue-100 text-blue-900 hover:bg-blue-200"
                       : "border-gray-300 bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
-                  title={!event.is_archived ? "Hide event" : "Show event"}
+                  title={event.is_open ? "Hide event" : "Show event"}
                 >
-                  {!event.is_archived ? (
-                    <Eye size={18} />
-                  ) : (
-                    <EyeOff size={18} />
-                  )}
+                  {event.is_open ? <Eye size={18} /> : <EyeOff size={18} />}
                 </button>
 
                 <button
