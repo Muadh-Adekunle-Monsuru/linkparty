@@ -117,6 +117,7 @@ export default function ShowAdminEvents({ user_id }: { user_id: string }) {
                   href={`/admin/present/${event._id}`}
                   className="flex items-center gap-2 border-2 border-black bg-black px-4 py-2 font-bold text-white transition hover:bg-white hover:text-black"
                   title="Present mode"
+                  target="_blank"
                 >
                   <Play size={18} />
                   PRESENT

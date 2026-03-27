@@ -18,6 +18,7 @@ import React, { useState } from "react"
 
 export default function EventPage({ params }: { params: any }) {
   const { eventId } = React.use(params) as any
+
   const eventData = useQuery(api.functions.getEventDetails, {
     event_id: eventId,
   })
