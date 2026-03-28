@@ -84,6 +84,10 @@ export default function PresentPageComponent({
   const handleNext = () => {
     setCurrentIndex((prev) => (prev + 1) % attendees.length)
   }
+  const currentLink =
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  const targetUrl = `${currentLink}/events/${eventData._id}` // Adjust the path as needed
+  const qrCodeSrc = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(targetUrl)}`
 
   if (attendees.length === 0 || currentAttendee == undefined) {
     return (
@@ -152,9 +156,7 @@ export default function PresentPageComponent({
 
             <div className="rounded-3xl border-8 border-black bg-white p-6 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-2">
               <Image
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(
-                  eventData._id
-                )}`}
+                src={qrCodeSrc}
                 alt="Event QR Code"
                 width={500}
                 height={500}
@@ -188,7 +190,7 @@ export default function PresentPageComponent({
                 Featured Attendee
               </div>
 
-              <h1 className="mb-8 text-6xl leading-[1.1] font-black break-words uppercase md:text-7xl lg:text-8xl">
+              <h1 className="mb-8 line-clamp-2 text-6xl leading-[1.1] font-black break-words uppercase md:text-7xl lg:text-8xl">
                 {currentAttendee.name}
               </h1>
 
