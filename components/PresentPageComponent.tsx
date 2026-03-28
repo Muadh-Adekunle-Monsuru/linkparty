@@ -86,7 +86,7 @@ export default function PresentPageComponent({
   }
   const currentLink =
     process.env.NEXT_PUBLIC_BASE_URL || "https://linkparty.vercel.app"
-  const targetUrl = `${currentLink}/events/${eventData._id}` // Adjust the path as needed
+  const targetUrl = `${currentLink}/event/${eventData._id}` // Adjust the path as needed
   const qrCodeSrc = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(targetUrl)}`
 
   if (attendees.length === 0 || currentAttendee == undefined) {
