@@ -85,7 +85,7 @@ export default function PresentPageComponent({
     setCurrentIndex((prev) => (prev + 1) % attendees.length)
   }
   const currentLink =
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+    process.env.NEXT_PUBLIC_BASE_URL || "https://linkparty.vercel.app"
   const targetUrl = `${currentLink}/events/${eventData._id}` // Adjust the path as needed
   const qrCodeSrc = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(targetUrl)}`
 
@@ -120,7 +120,7 @@ export default function PresentPageComponent({
                     1. Go to website
                   </p>
                   <p className="text-3xl font-black text-black sm:text-4xl">
-                    link-party.com
+                    linkparty.vercel.app
                   </p>
                 </div>
               </div>
@@ -175,7 +175,8 @@ export default function PresentPageComponent({
       {/* Top Instruction Banner */}
       <div className="w-full border-b-8 border-black bg-black px-4 py-4 text-center md:py-6">
         <h2 className="text-xl font-black tracking-widest text-yellow-400 uppercase md:text-2xl lg:text-3xl">
-          ⚡Visit link-party.com and enter code: {eventData.code} to join⚡
+          ⚡Visit linkparty.vercel.app and enter code: {eventData.code} to
+          join⚡
         </h2>
       </div>
 
