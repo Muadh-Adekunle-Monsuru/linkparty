@@ -142,6 +142,7 @@ export function AddLinkFloatButton({ event_id }: { event_id: string }) {
                 if (isTouched) setIsValid(isValidLinkedInLink(e.target.value))
               }}
               onBlur={(e) => {
+                setIsTouched(true)
                 const rawValue = e.target.value.trim()
 
                 // 1. If it's empty, just reset the error state and stop.
