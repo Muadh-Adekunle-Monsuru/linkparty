@@ -7,6 +7,7 @@ import { Metadata } from "next"
 import { ClerkProvider } from "@clerk/nextjs"
 import { ConvexClientProvider } from "@/ConvexClientProvider"
 import { Toaster } from "@/components/ui/sonner"
+import { Analytics } from "@vercel/analytics/next"
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -39,6 +40,7 @@ export default function RootLayout({
     >
       <body>
         <ClerkProvider>
+          <Analytics />
           <ConvexClientProvider>{children}</ConvexClientProvider>
           <Toaster position="top-center" />
         </ClerkProvider>
