@@ -63,13 +63,40 @@ export function AddLinkFloatButton({ event_id }: { event_id: string }) {
       })
   }
 
-  const isValidLinkedInLink = (url: string) => {
+  const isValidLinkedInLink = (url) => {
+    // Regex Breakdown:
+    // (in|company|profile|pub) -> LinkedIn uses various slugs
+    // \/?                       -> Optional trailing slash
+    // (\?.*)?                   -> Allows for '?' followed by any characters (UTM params)
     const linkedInRegex =
-      /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|company)\/[\w-]+\/?$/
+      /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|company|profile|pub)\/[\w-]+\/?(\?.*)?$/
 
     return linkedInRegex.test(url.trim())
   }
+  const normalizeLinkedInLink = (url) => {
+    if (!url) return ""
+    let cleaned = url.trim()
 
+    // 1. Strip query parameters (everything from '?' onwards)
+    if (cleaned.includes("?")) {
+      cleaned = cleaned.split("?")[0]
+    }
+
+    // 2. Add protocol if missing
+    if (!/^https?:\/\//i.test(cleaned)) {
+      cleaned = `https://${cleaned}`
+    }
+
+    // 3. Ensure www. is present for stability
+    if (
+      cleaned.includes("linkedin.com") &&
+      !cleaned.includes("www.linkedin.com")
+    ) {
+      cleaned = cleaned.replace("linkedin.com", "www.linkedin.com")
+    }
+
+    return cleaned
+  }
   return (
     <Dialog open={dialogChange} onOpenChange={setDialogChange}>
       <form>
@@ -114,7 +141,28 @@ export function AddLinkFloatButton({ event_id }: { event_id: string }) {
                 setLink(e.target.value)
                 if (isTouched) setIsValid(isValidLinkedInLink(e.target.value))
               }}
-              onBlur={handleBlur}
+              onBlur={(e) => {
+                const rawValue = e.target.value.trim()
+
+                // 1. If it's empty, just reset the error state and stop.
+                if (!rawValue) {
+                  setIsValid(false)
+                  return
+                }
+
+                // 2. Only normalize if it actually looks like a link
+                // (contains 'linkedin' or at least some characters)
+                if (rawValue.length > 5) {
+                  const formattedLink = normalizeLinkedInLink(rawValue)
+                  setLink(formattedLink)
+
+                  // 3. Validate the *formatted* version
+                  setIsValid(isValidLinkedInLink(formattedLink))
+                } else {
+                  // If it's too short to be a link, it's just invalid
+                  setIsValid(false)
+                }
+              }}
               required
               placeholder="https://www.linkedin.com/in/your-profile"
               className={`w-full rounded-4xl border-2 p-2 px-4 text-lg transition focus:outline-4 ${
