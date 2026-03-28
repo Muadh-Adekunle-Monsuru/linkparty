@@ -4,7 +4,6 @@ import Avatar from "boring-avatars"
 import { useMutation, useQuery } from "convex/react"
 import { Award } from "lucide-react"
 import { useState } from "react"
-import { InterestFilter } from "../InterestFilter"
 import { BrutalistSearchBar } from "../SearchBar"
 import { Button } from "../ui/button"
 
