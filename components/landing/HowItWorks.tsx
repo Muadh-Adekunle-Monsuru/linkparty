@@ -18,16 +18,16 @@ export default function HowItWorks() {
           icon={DraftingCompass}
           title="1. Create"
           subtitle="The Admin Setup."
-          description="Launch your event in seconds. Give it a name, set your start time, and pin any VVIP speakers. LinkParty generates a unique Event Code and a custom QR code for your venue."
-          bgColor="#fda5d5" // Added background color prop!
+          description="Launch your event in seconds. Give it a name, set your date and location, and upload your flier. LinkParty generates a unique Event Code and a custom QR code for your venue."
+          bgColor="bg-pink-300" // Added background color prop!
         />
 
         <StepCard
           icon={Smartphone}
           title="2. Join"
           subtitle="The Attendee Experience."
-          description="Attendees scan the venue QR or enter the 6-digit code. No lengthy sign-ups—they just drop their LinkedIn URL. The guest list updates in real-time on the directory."
-          bgColor="#fda5d5"
+          description="Attendees scan the QR or enter the 6-digit code. No lengthy sign-ups—they just drop their LinkedIn URL. The guest list updates in real-time on the directory. And Admin can pin any VVIP speakers"
+          bgColor="bg-yellow-300"
         />
 
         <StepCard
@@ -35,7 +35,7 @@ export default function HowItWorks() {
           title="3. Connect"
           subtitle="The Live Connection."
           description="Switch to Present Mode on the big screen. LinkParty cycles through profiles, displaying a large QR code. People can point their cameras and connect without leaving their seats."
-          bgColor="#fda5d5"
+          bgColor="bg-cyan-300"
         />
       </div>
     </div>
