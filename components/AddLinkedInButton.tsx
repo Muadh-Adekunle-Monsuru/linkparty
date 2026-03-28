@@ -27,6 +27,7 @@ export function AddLinkFloatButton({ event_id }: { event_id: string }) {
   const [isTouched, setIsTouched] = useState(false) // New state
   const [dialogChange, setDialogChange] = useState(false)
   const mutation = useMutation(api.functions.joinEvent)
+  const [loading, setLoading] = useState(false)
 
   const handleBlur = (e: { target: { value: string } }) => {
     setIsTouched(true)
@@ -38,6 +39,7 @@ export function AddLinkFloatButton({ event_id }: { event_id: string }) {
   }
 
   const handleSubmit = () => {
+    setLoading(true)
     if (!name) {
       toast.error("Enter your name")
       return
@@ -58,9 +60,22 @@ export function AddLinkFloatButton({ event_id }: { event_id: string }) {
         setIsTouched(false)
         setDialogChange(false)
       })
-      .catch(() => {
-        toast.success("Error joining event")
+      .catch((error) => {
+        const isDuplicate = error.message?.includes("duplicate")
+
+        if (isDuplicate) {
+          toast.error(
+            "You're already on the guest list! Each LinkedIn profile can only join once."
+          )
+        } else {
+          // Fallback for other errors (validation, connection, etc.)
+          toast.error(
+            "Something went wrong. Please check your connection and try again."
+          )
+          console.error("LinkParty Join Error:", error)
+        }
       })
+    setLoading(false)
   }
 
   const isValidLinkedInLink = (url) => {
@@ -192,8 +207,9 @@ export function AddLinkFloatButton({ event_id }: { event_id: string }) {
               type="submit"
               onClick={handleSubmit}
               className="cursor-pointer border border-black bg-black p-6 transition hover:bg-white hover:text-black dark:bg-white dark:text-black dark:hover:bg-black dark:hover:text-white"
+              disabled={!isValid || loading}
             >
-              <p>Join the Party</p>
+              {loading ? "Joining" : "Join the Party"}
             </Button>
           </DialogFooter>
         </DialogContent>

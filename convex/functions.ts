@@ -131,6 +131,14 @@ export const joinEvent = mutation({
     interests: v.optional(v.array(v.string())),
   },
   handler: async (ctx, args) => {
+    const getAttendees = await ctx.db
+      .query("attendess")
+      .filter((q) => q.eq(q.field("linkedin_url"), args.linkedin_url))
+      .first()
+
+    if (getAttendees?._id) {
+      throw new Error("duplicate")
+    }
     const event = await ctx.db.insert("attendess", { ...args })
 
     return event
