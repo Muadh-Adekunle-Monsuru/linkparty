@@ -133,7 +133,12 @@ export const joinEvent = mutation({
   handler: async (ctx, args) => {
     const getAttendees = await ctx.db
       .query("attendess")
-      .filter((q) => q.eq(q.field("linkedin_url"), args.linkedin_url))
+      .filter((q) =>
+        q.and(
+          q.eq(q.field("linkedin_url"), args.linkedin_url),
+          q.eq(q.field("event_id"), args.event_id)
+        )
+      )
       .first()
 
     if (getAttendees?._id) {

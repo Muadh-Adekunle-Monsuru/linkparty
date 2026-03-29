@@ -18,6 +18,7 @@ import { InterestSelector } from "./InterestSelector"
 import { toast } from "sonner"
 import { useMutation } from "convex/react"
 import { api } from "@/convex/_generated/api"
+import Link from "next/link"
 
 export function AddLinkFloatButton({ event_id }: { event_id: string }) {
   const [name, setName] = useState("")
@@ -144,9 +145,17 @@ export function AddLinkFloatButton({ event_id }: { event_id: string }) {
             />
           </div>
           <div>
-            <label className="mb-2 block text-lg font-bold">
-              LinkedIn Profile URL*
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="mb-2 block text-lg font-bold">
+                LinkedIn Profile URL*
+              </label>
+              <Link
+                href="/howto"
+                className="text-xs font-light text-muted-foreground underline"
+              >
+                how to get link
+              </Link>
+            </div>
             <input
               type="text"
               value={link}
