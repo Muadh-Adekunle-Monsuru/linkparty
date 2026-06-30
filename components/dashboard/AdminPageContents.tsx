@@ -11,8 +11,18 @@ export default function AdminPageContents() {
 
   if (!isLoaded)
     return (
-      <div className="flex h-full flex-1 flex-col items-center justify-center">
-        <Loader className="size-5 animate-spin" /> Loading...
+      <div className="flex h-full flex-1 flex-col items-center justify-center gap-6">
+        <Image
+          src={"/Loading-Time.png"}
+          height={200}
+          width={300}
+          alt="loading"
+          className="animate-pulse opacity-80"
+        />
+        <div className="flex items-center gap-3 text-lg font-bold text-neutral-600">
+          <Loader className="size-6 animate-spin" />
+          <p>Getting things ready...</p>
+        </div>
       </div>
     )
 
