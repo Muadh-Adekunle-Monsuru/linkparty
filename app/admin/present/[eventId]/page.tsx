@@ -21,7 +21,7 @@ export default function PresentationPage({ params }: { params: any }) {
       <div className="flex h-screen flex-1 flex-col items-center justify-center gap-5">
         <Image src={"/no-trips.png"} height={200} width={300} alt="loading" />
         <p>Sign in to present</p>
-        <SignInButton mode="modal">
+        <SignInButton mode="modal" forceRedirectUrl={`/admin/present/${eventId}`}>
           <button className="border-2 border-black bg-black px-6 py-2 font-bold text-white transition hover:bg-white hover:text-black">
             Sign In
           </button>

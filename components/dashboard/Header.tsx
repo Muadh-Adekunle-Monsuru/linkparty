@@ -19,7 +19,7 @@ export default function Header() {
             <Show
               when="signed-in"
               fallback={
-                <SignInButton mode="modal">
+                <SignInButton mode="modal" forceRedirectUrl="/admin">
                   <Button className="h-auto rounded-lg border-2 border-black bg-black px-6 py-2 font-bold text-white transition hover:bg-white hover:text-black">
                     Sign In
                   </Button>
