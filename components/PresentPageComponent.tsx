@@ -30,7 +30,9 @@ export default function PresentPageComponent({
   })
   const attendees = useQuery(api.functions.getEventAttendees, { event_id })
 
-  const rawSlide = Array.isArray(attendees) ? attendees[currentIndex] : undefined
+  const rawSlide = Array.isArray(attendees)
+    ? attendees[currentIndex]
+    : undefined
   const resolvedAttendee = isAttendeeDoc(rawSlide) ? rawSlide : undefined
 
   useEffect(() => {
@@ -94,8 +96,7 @@ export default function PresentPageComponent({
     setCurrentIndex((prev) => (prev + 1) % attendees.length)
   }
 
-  const baseUrl =
-    process.env.NEXT_PUBLIC_BASE_URL || "https://linkparty.vercel.app"
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://linkparty.ng"
   const targetUrl = `${baseUrl}/event/${eventData._id}`
   const qrCodeSrc = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(targetUrl)}`
 

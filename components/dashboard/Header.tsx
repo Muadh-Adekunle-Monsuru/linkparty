@@ -1,8 +1,7 @@
+import { Show, SignInButton, UserButton } from "@clerk/nextjs"
 import Link from "next/link"
-import React from "react"
 import Logo from "../ui/Logo"
 import { Button } from "../ui/button"
-import { Show, SignIn, SignInButton, UserButton } from "@clerk/nextjs"
 
 export default function Header() {
   return (
@@ -20,8 +19,8 @@ export default function Header() {
             <Show
               when="signed-in"
               fallback={
-                <SignInButton>
-                  <Button className="border-2 border-black bg-black px-6 py-2 font-bold text-white transition hover:bg-white hover:text-black">
+                <SignInButton mode="modal">
+                  <Button className="h-auto rounded-lg border-2 border-black bg-black px-6 py-2 font-bold text-white transition hover:bg-white hover:text-black">
                     Sign In
                   </Button>
                 </SignInButton>

@@ -4,16 +4,16 @@ import { DraftingCompass, MonitorSmartphone, Smartphone } from "lucide-react"
 
 export default function HowItWorks() {
   return (
-    <div className="flex min-h-[80vh] w-full flex-col space-y-12 rounded-3xl border-8 border-black bg-white p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] lg:p-16 dark:border-white dark:bg-black dark:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]">
+    <div className="flex min-h-fit w-full flex-col space-y-8 rounded-3xl border-8 border-black bg-white p-6 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] md:min-h-[80vh] md:space-y-12 md:p-8 lg:p-16 dark:border-white dark:bg-black dark:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]">
       <div className="text-center">
-        <h2 className="text-5xl font-black uppercase md:text-6xl">
+        <h2 className="text-2xl font-black uppercase md:text-6xl">
           How It Works
         </h2>
         <div className="mx-auto mt-4 h-2 w-24 bg-yellow-300"></div>
       </div>
 
       {/* Grid layout instead of flex keeps the heights perfectly equal */}
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-3 lg:gap-12">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8 lg:gap-12">
         <StepCard
           icon={DraftingCompass}
           title="1. Create"

@@ -37,7 +37,7 @@ export default function PresentEmptyState({
                   1. Go to website
                 </p>
                 <p className="text-3xl font-black text-black sm:text-4xl">
-                  linkparty.vercel.app
+                  linkparty.ng
                 </p>
               </div>
             </div>

@@ -16,7 +16,7 @@ export default function StepCard({
 }) {
   return (
     <div
-      className={`flex min-h-[80vh] w-full flex-col space-y-12 rounded-3xl border-8 border-black bg-white p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] lg:p-16 dark:border-white dark:bg-black dark:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]`}
+      className={`flex h-full w-full flex-col rounded-3xl border-4 border-black bg-white p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] md:p-8 md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] lg:p-10 dark:border-white dark:bg-black dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] md:dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]`}
     >
       <div
         className={`${bgColor} mb-6 inline-flex w-max rounded-full border-4 border-black p-4 dark:border-white dark:bg-black`}

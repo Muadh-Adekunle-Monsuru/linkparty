@@ -26,8 +26,8 @@ export default function AdminPageContents() {
           alt="loading"
         />
         <p>Sign in to create events</p>
-        <SignInButton>
-          <button className="border-2 border-black bg-black px-6 py-2 font-bold text-white transition hover:bg-white hover:text-black">
+        <SignInButton mode="modal">
+          <button className="rounded-lg border-2 border-black bg-black px-6 py-2 font-bold text-white transition hover:bg-white hover:text-black">
             Sign In
           </button>
         </SignInButton>
