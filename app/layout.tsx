@@ -21,6 +21,26 @@ const fontMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Link Party",
   description: "Stop Searching. Start Syncing.",
+  openGraph: {
+    title: "Link Party",
+    description: "The Ultimate Networking Tool.",
+    images: [
+      {
+        url: "https://res.cloudinary.com/dzrkcnt5h/image/upload/v1782999988/linkparty.ng-Link_Party-cvscreenshot_bdcjcd.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Link Party Thumbnail",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Link Party",
+    description: "Stop Searching. Start Syncing.",
+    images: [
+      "https://res.cloudinary.com/dzrkcnt5h/image/upload/v1782999988/linkparty.ng-Link_Party-cvscreenshot_bdcjcd.jpg",
+    ],
+  },
 }
 export default function RootLayout({
   children,
