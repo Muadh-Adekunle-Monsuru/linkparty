@@ -6,7 +6,7 @@ import Footer from "@/components/landing/Footer"
 export default function Page() {
   return (
     <div className="bg-custom-pattern flex min-h-svh flex-col space-y-5 px-2 md:space-y-12 md:px-10">
-      <Header />
+      {/* <Header /> */}
       <HeroSection />
       <HowItWorks />
       <Footer />
